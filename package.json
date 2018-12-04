@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "firebase": "^5.6.0",
+    "npm": "^6.4.1",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
@@ -41,6 +42,9 @@
     "rules": {},
     "parserOptions": {
       "parser": "babel-eslint"
+    },
+    "globals": {
+      "_": false
     }
   },
   "postcss": {

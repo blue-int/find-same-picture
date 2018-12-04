@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'RixVita M';
+    src: url('RixVitaM.eot');
+    src: url('RixVitaM.eot?#iefix') format('embedded-opentype'),
+        url('RixVitaM.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RixVita B';
+    src: url('RixVitaB.eot');
+    src: url('RixVitaB.eot?#iefix') format('embedded-opentype'),
+        url('RixVitaB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'RixVita L';
+    src: url('RixVitaL.eot');
+    src: url('RixVitaL.eot?#iefix') format('embedded-opentype'),
+        url('RixVitaL.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
