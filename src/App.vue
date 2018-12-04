@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      같은그림찾기
+      by BLUE
     </div>
     <router-view/>
   </div>
@@ -18,6 +18,7 @@
 }
 #nav {
   padding: 30px;
+  font: 400 30px 'Lato', 'Noto Sans KR', sans-serif;
   a {
     font-weight: bold;
     color: #2c3e50;
