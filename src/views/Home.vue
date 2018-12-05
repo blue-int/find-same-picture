@@ -95,7 +95,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   font: 500 30px 'RixVita', serif;
-  padding: 0 100px 50px 100px;
+  padding: 0 100px 100px 100px;
 }
 .player div {
   min-width: 150px;
@@ -206,6 +206,9 @@ export default {
 }
 #explanation {
   width: max-content;
+  max-width: 650px;
+  word-break: keep-all;
+  word-wrap: break-word;
   padding: 0 10px 0 10px;
   border: 3px solid black;
   border-radius: 5px;
@@ -238,13 +241,13 @@ export default {
   padding: 0;
 }
 .belt img {
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   display: flex;
 }
 .select div {
-  width: 37px;
-  height: 37px;
+  width: 42px;
+  height: 42px;
   display: flex;
 }
 .select-1 div.player {
@@ -254,6 +257,20 @@ export default {
 .select-2 div.player {
   background: url('~@/assets/img/select-2.png') center no-repeat;
   background-size: contain;
+}
+@media screen and (max-height: 1000px) {
+  #home {
+    padding: 0 100px 50px 100px;
+  }
+  .belt img {
+    width: 35px;
+    height: 35px;
+  }
+  .select div {
+    width: 37px;
+    height: 37px;
+    display: flex;
+  }
 }
 @media screen and (max-height: 900px) {
   #home {

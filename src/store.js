@@ -22,7 +22,8 @@ export default new Vuex.Store({
     },
     order: 1,
     check: false,
-    explanation: '시작 버튼을 눌러주세요.'
+    explanation: '시작 버튼을 눌러주세요.',
+    end: false
   },
   mutations: {
   },
@@ -52,25 +53,29 @@ export default new Vuex.Store({
       setTimeout(() => {
         list[index].img = false
         state.check = false
-        state.explanation = `${state.name[state.order]}님의 차례입니다.`
+        if (!state.end) {
+          state.explanation = `${state.name[state.order]}님의 차례입니다.`
+        }
       }, 2000)
     },
     async move ({ state }, { order, num }) {
       let pictures = state.pictures[order]
-      if ((pictures[pictures.length + state.player[order] - 1] + 1) % 16 !== num) {
+      if ((pictures[pictures.length + state.player[order] - 1] + 1) % 16 !== num % 16) {
         state.explanation = '틀렸습니다!'
         state.pictures[order].pop()
         await document.getElementById('wrong').play()
         state.player[order] += 1
-        state.order = state.order === 1 ? 2 : 1
         if (state.player[order] > -1) {
-          state.explanation = '패배!'
+          state.end = true
+          state.explanation = `${state.name[state.order]}님이 컨베이어 벨트에서 떨어져 패배하셨습니다. 게임을 종료합니다.`
         }
+        state.order = state.order === 1 ? 2 : 1
       } else {
         state.player[order] -= 1
         state.explanation = '정답!'
         if (state.player[order] === -20) {
-          state.explanation = '승리!'
+          state.end = true
+          state.explanation = `${state.name[state.order]}님이 결승점에 도달하여 승리하셨습니다. 게임을 종료합니다.`
         }
       }
     }
