@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <audio id="background-music" loop preload>
+    <audio id="background-music" loop preload controls>
       <source src="@/assets/music/background.mp3">
     </audio>
     <audio id="wrong" preload>
@@ -12,11 +12,14 @@
     </div>
     <div class="belt-wrapper">
       <transition-group name="select-transition" class="select select-1" tag="div">
-        <div :class="{ player : 20 + player[1] === n - 1 }" v-for="n in 20" :key="`select-${n}`">
+        <div :class="{ player : 20 + player[1] === n - 2 }" v-for="n in 20" :key="`select-${n}`">
         </div>
       </transition-group>
       <transition-group name="picture" class="belt" tag="div">
-        <div :class="{ check: check }" class="" v-for="n in 20" :key="`${pictures[1][pictures[1].length-21+n]}`">
+        <div key="goal-1">
+          <img :src="picture(pictures[1][0])" alt="결승점">
+        </div>
+        <div :class="{ check: check }" class="" v-for="n in 19" :key="`${pictures[1][pictures[1].length-21+n]}`">
           <img :src="picture(pictures[1][pictures[1].length-21+n])"/>
         </div>
       </transition-group>
@@ -36,12 +39,15 @@
     </div>
     <div class="belt-wrapper">
       <transition-group name="picture" class="belt" tag="div">
-        <div :class="{ check: check }" class="" v-for="n in 20" :key="`${pictures[2][pictures[2].length-21+n]}`">
+        <div key="goal-2">
+          <img :src="picture(pictures[2][0])" alt="결승점">
+        </div>
+        <div :class="{ check: check }" class="" v-for="n in 19" :key="`${pictures[2][pictures[2].length-21+n]}`">
           <img :src="picture(pictures[2][pictures[2].length-21+n])" :alt="n"/>
         </div>
       </transition-group>
       <transition-group name="select-transition" class="select select-2" tag="div">
-        <div :class="{ player : 20 + player[2] === index }" v-for="(num, index) in pictures[2].slice(-20)" :key="`select-${index}`">
+        <div :class="{ player : 20 + player[2] === n - 2 }" v-for="n in 20" :key="`select-${n}`">
         </div>
       </transition-group>
     </div>
@@ -96,6 +102,11 @@ export default {
   align-items: center;
   font: 500 30px 'RixVita', serif;
   padding: 0 100px 100px 100px;
+}
+#background-music {
+  position: fixed;
+  right: 0;
+  top: 0;
 }
 .player div {
   min-width: 150px;
