@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
+      made by BLUE<br>design by 영우
     </div>
     <router-view/>
   </div>
@@ -28,6 +29,10 @@ html, body, #app {
   margin: 0;
 }
 #app {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -38,19 +43,15 @@ html, body, #app {
   background-size: cover;
 }
 #nav {
-  padding: 30px;
-  font: 500 60px 'RixVita', sans-serif;
-  div:last-child {
-    margin-top: 10px;
-    font-size: 40px;
-  }
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0px;
+  font: 500 30px 'RixVita', sans-serif;
+  text-align: left;
+  color: orange;
 }
 button:focus {
   outline: none;
-}
-@media screen and (max-height: 900px) {
-  #nav {
-    padding: 0;
-  }
 }
 </style>

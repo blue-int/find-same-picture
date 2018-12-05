@@ -1,16 +1,26 @@
 <template>
   <div id="test">
-    <div class="wrapper">
-      <transition-group name="cell" tag="div" id="box">
-        <button class="cell" @click="showBehind({letter, index})" v-for="(letter, index) in list" :key="`cell-${letter.letter}`">
-          <div class="flip-container">
-            <div>{{letter.letter}}</div>
-            <img :src="pictureBehind(index)"/>
-          </div>
-        </button>
-      </transition-group>
-      <button class="reshuffle" @click="reshuffle">Reshuffle</button>
-      <button class="reshuffle" v-show="show" @click="start()">Start</button>
+    <div class="belt-wrapper">
+      <div class="select select-1">
+        <div :class="{ player : 20 + player[1] === index }" v-for="(num, index) in pictures[1].slice(-20)" :key="`select-${index}`">
+        </div>
+      </div>
+      <div class="belt">
+        <div :class="{ player : 20 + player[1] === index }" v-for="(num, index) in pictures[1].slice(-20)" :key="`piece-${index}`">
+          <img :src="picture(num)" :alt="num"/>
+        </div>
+      </div>
+    </div>
+    <div class="belt-wrapper">
+      <div class="select select-1">
+        <div :class="{ player : 20 + player[1] === index }" v-for="(num, index) in pictures[1].slice(-20)" :key="`select-${index}`">
+        </div>
+      </div>
+      <div class="belt">
+        <div v-for="n in 20" :key="`piece-${n}`">
+          <img :src="picture(pictures[1][pictures[1].length-21+n])" :alt="n"/>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -46,49 +56,47 @@ export default {
 </script>
 
 <style scoped>
-.cell {
-  width: 300px;
-  height: 200px;
-  border: 1px solid #f1f1f1;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
-}
-
-/* This container is needed to position the front and back side */
-.flip-container {
-  position: relative;
+#test {
   display: flex;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
+  flex-direction: row;
 }
-
-/* Do an horizontal flip when you move the mouse over the flip box container */
-.cell:hover .flip-container {
-  transform: rotateY(180deg);
+.belt-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-right: 100px;
 }
-
-/* Position the front and back side */
-.flip-container div, .flip-container img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-/* Style the back side */
-.flip-container img {
-  transform: rotateY(180deg);
+.belt {
+  border: 2px solid black;
 }
-.cell-enter-active, .cell-leave-active {
-  transition: all 1s;
+.belt div {
+  border: 1px solid transparent;
+  margin: 0;
+  padding: 0;
 }
-.cell-enter, .cell-leave-to {
-  opacity: 0;
+.belt .player {
+  border: 1px solid green;
 }
-.cell-move {
-  transition: transform 1s;
+.belt img {
+  width: 35px;
+  height: 35px;
+  display: flex;
+}
+.select div {
+  width: 37px;
+  height: 37px;
+  display: flex;
+}
+.select-1 div.player {
+  background: url('~@/assets/img/select-1.png') center no-repeat;
+  background-size: contain;
+}
+.select-2 div.player {
+  background: url('~@/assets/img/select-2.png') center no-repeat;
+  background-size: contain;
 }
 </style>

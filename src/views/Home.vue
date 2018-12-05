@@ -1,25 +1,25 @@
 <template>
   <div id="home">
-    <audio id="background-music" loop>
+    <audio id="background-music" loop preload>
       <source src="@/assets/music/background.mp3">
     </audio>
-    <audio id="wrong">
+    <audio id="wrong" preload>
       <source src="@/assets/music/wrong_short.mp3">
     </audio>
     <div class="player">
-      <input v-show="show" v-model="name[1]">
       <div v-text="name[1]"></div>
+      <input v-show="show" v-model="name[1]">
     </div>
     <div class="belt-wrapper">
-      <div class="select select-1">
-        <div :class="{ player : 20 + player[1] === index }" v-for="(num, index) in pictures[1].slice(-20)" :key="`select-${index}`">
+      <transition-group name="select-transition" class="select select-1" tag="div">
+        <div :class="{ player : 20 + player[1] === n - 1 }" v-for="n in 20" :key="`select-${n}`">
         </div>
-      </div>
-      <div class="belt">
-        <div :class="{ player : 20 + player[1] === index }" v-for="(num, index) in pictures[1].slice(-20)" :key="`piece-${index}`">
-          <img :src="picture(num)" :alt="num"/>
+      </transition-group>
+      <transition-group name="picture" class="belt" tag="div">
+        <div :class="{ check: check }" class="" v-for="n in 20" :key="`${pictures[1][pictures[1].length-21+n]}`">
+          <img :src="picture(pictures[1][pictures[1].length-21+n])"/>
         </div>
-      </div>
+      </transition-group>
     </div>
     <div class="wrapper">
       <transition-group name="cell" tag="div" id="box">
@@ -35,19 +35,19 @@
       <button class="reshuffle" v-show="show" @click="start()">Start</button>
     </div>
     <div class="belt-wrapper">
-      <div class="belt">
-        <div :class="{ player : 20 + player[2] === index }" v-for="(num, index) in pictures[2].slice(-20)" :key="index">
-          <img :src="picture(num)" :alt="num"/>
+      <transition-group name="picture" class="belt" tag="div">
+        <div :class="{ check: check }" class="" v-for="n in 20" :key="`${pictures[2][pictures[2].length-21+n]}`">
+          <img :src="picture(pictures[2][pictures[2].length-21+n])" :alt="n"/>
         </div>
-      </div>
-      <div class="select select-2">
-        <div :class="{ player : 20 + player[2] === index }" v-for="(num, index) in pictures[2].slice(-20)" :key="index">
+      </transition-group>
+      <transition-group name="select-transition" class="select select-2" tag="div">
+        <div :class="{ player : 20 + player[2] === index }" v-for="(num, index) in pictures[2].slice(-20)" :key="`select-${index}`">
         </div>
-      </div>
+      </transition-group>
     </div>
     <div class="player">
-      <input v-show="show" v-model="name[2]">
       <div v-text="name[2]"></div>
+      <input v-show="show" v-model="name[2]">
     </div>
   </div>
 </template>
@@ -68,7 +68,7 @@ export default {
       'showBehind'
     ]),
     picture: function (num) {
-      return require(`@/assets/img/${num}.svg`)
+      return require(`@/assets/img/${num % 16 + 1}.svg`)
     },
     pictureBehind: function (index) {
       return require(`@/assets/img/${this.list_behind[index]}.svg`)
@@ -81,7 +81,7 @@ export default {
   },
   computed: {
     ...mapState([
-      'list', 'list_behind', 'pictures', 'player', 'explanation', 'order', 'name'
+      'list', 'list_behind', 'pictures', 'player', 'explanation', 'order', 'name', 'check'
     ])
   }
 }
@@ -89,13 +89,13 @@ export default {
 
 <style scoped>
 #home {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   font: 500 30px 'RixVita', serif;
-  margin-top: 100px;
-  padding: 0 20px 0 20px;
+  padding: 0 100px 50px 100px;
 }
 .player div {
   min-width: 150px;
@@ -109,6 +109,15 @@ export default {
   justify-content: center;
   align-items: center;
 }
+.player input {
+  height: 50px;
+  max-width: 250px;
+  box-sizing: border-box;
+  border: 5px solid black;
+  margin-top: 30px;
+  font: 500 30px 'RixVita', serif;
+  text-align: center;
+}
 .belt-wrapper {
   display: flex;
   flex-direction: row;
@@ -117,6 +126,26 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.select-transition-move {
+  transition: transform 1s;
+}
+.belt div {
+  perspective: 1000px;
+  transition: all 1s;
+}
+.picture-move {
+  transition: transform 1s;
+}
+.picture-enter {
+  transform: translateY(-50%) rotateX(90deg);
+  opacity: 0;
+}
+.picture-leave-to {
+  transform: translateY(-50%) rotateX(-90deg);
+}
+.picture-leave-active {
+  position: absolute;
 }
 #box {
   display: flex;
@@ -172,12 +201,6 @@ export default {
 .flip-container img {
   transform: rotateY(180deg);
 }
-.cell-enter-active, .cell-leave-active {
-  transition: all 1s;
-}
-.cell-enter, .cell-leave-to {
-  opacity: 0;
-}
 .cell-move {
   transition: transform 1s;
 }
@@ -209,12 +232,10 @@ export default {
   border: 2px solid black;
 }
 .belt div {
+  display: flex;
   border: 1px solid transparent;
   margin: 0;
   padding: 0;
-}
-.belt .player {
-  border: 1px solid green;
 }
 .belt img {
   width: 35px;
