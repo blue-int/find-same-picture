@@ -34,6 +34,8 @@ html, body, #app {
   text-align: center;
   color: black;
   background: url('~@/assets/img/bg.svg');
+  background-position: center top;
+  background-size: cover;
 }
 #nav {
   padding: 30px;
@@ -45,5 +47,10 @@ html, body, #app {
 }
 button:focus {
   outline: none;
+}
+@media screen and (max-height: 900px) {
+  #nav {
+    padding: 0;
+  }
 }
 </style>

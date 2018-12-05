@@ -6,17 +6,19 @@
     <audio id="wrong">
       <source src="@/assets/music/wrong_short.mp3">
     </audio>
-    <div class="player player-1">
+    <div class="player">
       <input v-show="show" v-model="name[1]">
       <div v-text="name[1]"></div>
     </div>
-    <div class="select select-1">
-      <div :class="{ player : 20 + player[1] === index }" v-for="(num, index) in pictures[1].slice(-20)" :key="`select-${index}`">
+    <div class="belt-wrapper">
+      <div class="select select-1">
+        <div :class="{ player : 20 + player[1] === index }" v-for="(num, index) in pictures[1].slice(-20)" :key="`select-${index}`">
+        </div>
       </div>
-    </div>
-    <div class="belt">
-      <div :class="{ player : 20 + player[1] === index }" v-for="(num, index) in pictures[1].slice(-20)" :key="`piece-${index}`">
-        <img :src="picture(num)" :alt="num"/>
+      <div class="belt">
+        <div :class="{ player : 20 + player[1] === index }" v-for="(num, index) in pictures[1].slice(-20)" :key="`piece-${index}`">
+          <img :src="picture(num)" :alt="num"/>
+        </div>
       </div>
     </div>
     <div class="wrapper">
@@ -32,16 +34,18 @@
       <button class="reshuffle" @click="reshuffle">Reshuffle</button>
       <button class="reshuffle" v-show="show" @click="start()">Start</button>
     </div>
-    <div class="belt">
-      <div :class="{ player : 20 + player[2] === index }" v-for="(num, index) in pictures[2].slice(-20)" :key="index">
-        <img :src="picture(num)" :alt="num"/>
+    <div class="belt-wrapper">
+      <div class="belt">
+        <div :class="{ player : 20 + player[2] === index }" v-for="(num, index) in pictures[2].slice(-20)" :key="index">
+          <img :src="picture(num)" :alt="num"/>
+        </div>
+      </div>
+      <div class="select select-2">
+        <div :class="{ player : 20 + player[2] === index }" v-for="(num, index) in pictures[2].slice(-20)" :key="index">
+        </div>
       </div>
     </div>
-    <div class="select select-2">
-      <div :class="{ player : 20 + player[2] === index }" v-for="(num, index) in pictures[2].slice(-20)" :key="index">
-      </div>
-    </div>
-    <div class="player player-2">
+    <div class="player">
       <input v-show="show" v-model="name[2]">
       <div v-text="name[2]"></div>
     </div>
@@ -87,16 +91,11 @@ export default {
 #home {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   font: 500 30px 'RixVita', serif;
   margin-top: 100px;
-}
-.player-1 {
-  margin-right: 150px;
-}
-.player-2 {
-  margin-left: 150px;
+  padding: 0 20px 0 20px;
 }
 .player div {
   min-width: 150px;
@@ -109,6 +108,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.belt-wrapper {
+  display: flex;
+  flex-direction: row;
 }
 .wrapper {
   display: flex;
@@ -123,7 +126,7 @@ export default {
   flex-wrap: wrap;
   width: 440px;
   height: 440px;
-  margin: 100px 250px 50px 250px;
+  margin: 80px 0 50px 0;
   border: 10px solid white;
   border-radius: 10px;
 }
@@ -230,5 +233,10 @@ export default {
 .select-2 div.player {
   background: url('~@/assets/img/select-2.png') center no-repeat;
   background-size: contain;
+}
+@media screen and (max-height: 900px) {
+  #home {
+    margin: 0; padding: 100px 20px 0 20px;
+  }
 }
 </style>
