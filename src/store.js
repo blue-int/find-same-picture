@@ -22,7 +22,7 @@ export default new Vuex.Store({
     },
     order: 1,
     check: false,
-    explanation: '플레이어 1님의 차례입니다.'
+    explanation: '시작 버튼을 눌러주세요.'
   },
   mutations: {
   },
@@ -55,10 +55,11 @@ export default new Vuex.Store({
         state.explanation = `${state.name[state.order]}님의 차례입니다.`
       }, 1000)
     },
-    move ({ state }, { order, num }) {
+    async move ({ state }, { order, num }) {
       let pictures = state.pictures[order]
       if (pictures[pictures.length + state.player[order] - 1] !== num) {
         state.explanation = '틀렸습니다!'
+        await document.getElementById('wrong').play()
         pictures.pop()
         state.player[order] += 1
         state.order = state.order === 1 ? 2 : 1

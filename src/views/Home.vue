@@ -1,5 +1,11 @@
 <template>
   <div id="home">
+    <audio id="background-music" loop>
+      <source src="@/assets/music/background.mp3">
+    </audio>
+    <audio id="wrong">
+      <source src="@/assets/music/wrong_short.mp3">
+    </audio>
     <div class="player player-1">
       <input v-show="show" v-model="name[1]">
       <div v-text="name[1]"></div>
@@ -62,6 +68,7 @@ export default {
       return require(`@/assets/img/${this.list_behind[index]}.svg`)
     },
     start: function () {
+      document.getElementById('background-music').play()
       this.show = false
       this.$store.dispatch('updateExplanation', this.name[1])
     }
@@ -90,7 +97,8 @@ export default {
   margin-left: 150px;
 }
 .player div {
-  width: 150px;
+  min-width: 150px;
+  padding: 0 5px 0 5px;
   height: 100px;
   font-size: 50px;
   background: #fea502;
@@ -125,7 +133,7 @@ export default {
   border: 0;
   margin: 3px;
 }
-#box img {
+.cell img {
   width: 100%;
   height: 100%;
 }
@@ -155,6 +163,12 @@ export default {
   border-radius: 5px;
   text-align: center;
   font: 700 20px 'RixVita', serif;
+}
+.reshuffle:hover {
+  background: #f0f0f0;
+}
+.reshuffle:active {
+  background: #c8bdbd;
 }
 .belt {
   border: 2px solid black;
