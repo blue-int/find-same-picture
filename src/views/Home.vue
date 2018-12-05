@@ -21,9 +21,11 @@
     </div>
     <div class="wrapper">
       <transition-group name="cell" tag="div" id="box">
-        <button class="cell" @click="showBehind({letter, index})" v-for="(letter, index) in list" :key="`cell-${letter.letter}`">
-          <div v-show="!letter.img">{{letter.letter}}</div>
-          <img v-show="letter.img" :src="pictureBehind(index)"/>
+        <button class="cell" :class="{flipped: letter.img}" @click="showBehind({letter, index})" v-for="(letter, index) in list" :key="`cell-${letter.letter}`">
+          <div class="flip-container">
+            <div>{{letter.letter}}</div>
+            <img :src="pictureBehind(index)"/>
+          </div>
         </button>
       </transition-group>
       <div id="explanation">{{explanation}}</div>
@@ -129,13 +131,43 @@ export default {
   width: 100px;
   height: 100px;
   font: 700 70px 'RixVita', serif;
-  background: white;
+  background: transparent;
   border: 0;
   margin: 3px;
+  padding: 0;
+  perspective: 1000px;
 }
-.cell img {
+.flip-container {
+  position: relative;
+  display: flex;
   width: 100%;
   height: 100%;
+  background: white;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+.cell.flipped .flip-container {
+  transform: rotateY(180deg);
+}
+.flip-container div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flip-container img {
+  width: 100%;
+  height: 100%;
+}
+.flip-container div, .flip-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+.flip-container img {
+  transform: rotateY(180deg);
 }
 .cell-enter-active, .cell-leave-active {
   transition: all 1s;

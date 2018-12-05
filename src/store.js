@@ -53,7 +53,7 @@ export default new Vuex.Store({
         list[index].img = false
         state.check = false
         state.explanation = `${state.name[state.order]}님의 차례입니다.`
-      }, 1000)
+      }, 2000)
     },
     async move ({ state }, { order, num }) {
       let pictures = state.pictures[order]
