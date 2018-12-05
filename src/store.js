@@ -60,7 +60,8 @@ export default new Vuex.Store({
     },
     async move ({ state }, { order, num }) {
       let pictures = state.pictures[order]
-      if (state.player[order] === -20 && pictures[0] + 1 === num % 16) {
+      console.log(state.player[order], pictures[0] + 1, num % 16)
+      if (state.player[order] === -19 && pictures[0] + 1 === num % 16) {
         state.end = true
         state.explanation = `${state.name[state.order]}님이 결승점에 도달하여 승리하셨습니다. 게임을 종료합니다.`
       } else if ((pictures[pictures.length + state.player[order] - 1] + 1) % 16 !== num % 16) {

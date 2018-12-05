@@ -12,7 +12,7 @@
     </div>
     <div class="belt-wrapper">
       <transition-group name="select-transition" class="select select-1" tag="div">
-        <div :class="{ player : 20 + player[1] === n - 2 }" v-for="n in 20" :key="`select-${n}`">
+        <div :class="{ player : 20 + player[1] === n - 1 }" v-for="n in 20" :key="`select-${n}`">
         </div>
       </transition-group>
       <transition-group name="picture" class="belt" tag="div">
@@ -20,7 +20,7 @@
           <img :src="picture(pictures[1][0])" alt="결승점">
         </div>
         <div :class="{ check: check }" class="" v-for="n in 19" :key="`${pictures[1][pictures[1].length-21+n]}`">
-          <img :src="picture(pictures[1][pictures[1].length-21+n])"/>
+          <img :src="picture(pictures[1][pictures[1].length-20+n])"/>
         </div>
       </transition-group>
     </div>
@@ -43,11 +43,11 @@
           <img :src="picture(pictures[2][0])" alt="결승점">
         </div>
         <div :class="{ check: check }" class="" v-for="n in 19" :key="`${pictures[2][pictures[2].length-21+n]}`">
-          <img :src="picture(pictures[2][pictures[2].length-21+n])" :alt="n"/>
+          <img :src="picture(pictures[2][pictures[2].length-20+n])" :alt="n"/>
         </div>
       </transition-group>
       <transition-group name="select-transition" class="select select-2" tag="div">
-        <div :class="{ player : 20 + player[2] === n - 2 }" v-for="n in 20" :key="`select-${n}`">
+        <div :class="{ player : 20 + player[2] === n - 1 }" v-for="n in 20" :key="`select-${n}`">
         </div>
       </transition-group>
     </div>
