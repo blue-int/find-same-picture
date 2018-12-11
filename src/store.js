@@ -28,8 +28,9 @@ export default new Vuex.Store({
   mutations: {
   },
   actions: {
-    updateExplanation ({ state }, name) {
-      state.explanation = `${name}님의 차례입니다.`
+    updateExplanation ({ state }) {
+      state.order = _.random(1, 2)
+      state.explanation = `${state.name[state.order]}님의 차례입니다.`
     },
     reshuffle ({ state, dispatch }) {
       state.list = _.shuffle(state.list)
@@ -38,8 +39,7 @@ export default new Vuex.Store({
       state.pictures[2] = _.shuffle(state.pictures[1])
       state.player[1] = -9
       state.player[2] = -9
-      state.order = 1
-      state.explanation = `${state.name[1]}님의 차례입니다.`
+      dispatch('updateExplanation')
     },
     showBehind ({ state, dispatch }, { letter, index }) {
       if (state.check) {
@@ -60,7 +60,6 @@ export default new Vuex.Store({
     },
     async move ({ state }, { order, num }) {
       let pictures = state.pictures[order]
-      console.log(state.player[order], pictures[0] + 1, num % 16)
       if (state.player[order] === -19 && pictures[0] + 1 === num % 16) {
         state.end = true
         state.explanation = `${state.name[state.order]}님이 결승점에 도달하여 승리하셨습니다. 게임을 종료합니다.`

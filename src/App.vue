@@ -31,14 +31,15 @@ html, body, #app {
 #app {
   position: relative;
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: black;
-  background: url('~@/assets/img/bg.svg');
+  background: url('~@/assets/img/background.svg');
   background-position: center top;
   background-size: cover;
 }
@@ -53,5 +54,10 @@ html, body, #app {
 }
 button:focus {
   outline: none;
+}
+@media screen and (max-width: 1200px) {
+  #title {
+    width: 300px;
+  }
 }
 </style>

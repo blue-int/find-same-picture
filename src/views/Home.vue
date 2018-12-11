@@ -10,7 +10,7 @@
       <div v-text="name[1]"></div>
       <input v-show="show" v-model="name[1]">
     </div>
-    <div class="belt-wrapper">
+    <div class="belt-wrapper belt-wrapper-1">
       <transition-group name="select-transition" class="select select-1" tag="div">
         <div :class="{ player : 20 + player[1] === n - 1 }" v-for="n in 20" :key="`select-${n}`">
         </div>
@@ -25,6 +25,7 @@
       </transition-group>
     </div>
     <div class="wrapper">
+      <img id="title" src="@/assets/img/title.png" alt="같은 그림 찾기">
       <transition-group name="cell" tag="div" id="box">
         <button class="cell" :class="{flipped: letter.img}" @click="showBehind({letter, index})" v-for="(letter, index) in list" :key="`cell-${letter.letter}`">
           <div class="flip-container">
@@ -37,7 +38,7 @@
       <button class="reshuffle" @click="reshuffle">Reshuffle</button>
       <button class="reshuffle" v-show="show" @click="start()">Start</button>
     </div>
-    <div class="belt-wrapper">
+    <div class="belt-wrapper belt-wrapper-2">
       <transition-group name="picture" class="belt" tag="div">
         <div key="goal-2">
           <img :src="picture(pictures[2][0])" alt="결승점">
@@ -82,7 +83,7 @@ export default {
     start: function () {
       document.getElementById('background-music').play()
       this.show = false
-      this.$store.dispatch('updateExplanation', this.name[1])
+      this.$store.dispatch('updateExplanation')
     }
   },
   computed: {
@@ -96,17 +97,22 @@ export default {
 <style scoped>
 #home {
   width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   font: 500 30px 'RixVita', serif;
-  padding: 0 100px 100px 100px;
+  padding: 0 50px 100px 50px;
 }
 #background-music {
   position: fixed;
   right: 0;
   top: 0;
+}
+#title {
+  width: 450px;
+  margin-bottom: 30px;
 }
 .player div {
   min-width: 150px;
@@ -132,6 +138,7 @@ export default {
 .belt-wrapper {
   display: flex;
   flex-direction: row;
+  align-self: flex-end;
 }
 .wrapper {
   display: flex;
@@ -141,8 +148,11 @@ export default {
 .select-transition-move {
   transition: transform 1s;
 }
-.belt div {
+.belt {
   perspective: 1000px;
+}
+.belt div {
+  backface-visibility: hidden;
   transition: all 1s;
 }
 .picture-move {
@@ -166,7 +176,7 @@ export default {
   flex-wrap: wrap;
   width: 440px;
   height: 440px;
-  margin: 80px 0 50px 0;
+  margin: 0 0 50px 0;
   border: 10px solid white;
   border-radius: 10px;
 }
@@ -256,6 +266,9 @@ export default {
   height: 40px;
   display: flex;
 }
+.select {
+  border: 2px solid transparent;
+}
 .select div {
   width: 42px;
   height: 42px;
@@ -271,7 +284,12 @@ export default {
 }
 @media screen and (max-height: 1000px) {
   #home {
-    padding: 0 100px 50px 100px;
+    padding: 0 50px;
+    width: 100%;
+    height: 100%;
+  }
+  .belt-wrapper {
+    align-self: center;
   }
   .belt img {
     width: 35px;
@@ -285,7 +303,83 @@ export default {
 }
 @media screen and (max-height: 900px) {
   #home {
-    margin: 0; padding: 100px 20px 0 20px;
+    margin: 0; padding: 0 30px;
+  }
+  #title {
+    width: 300px;
+    margin: 0;
+  }
+  #box {
+    margin: 10px 0;
+    width: 320px;
+    height: 320px;
+  }
+  .cell {
+    width: 70px;
+    height: 70px;
+    font-size: 50px;
+  }
+}
+@media screen and (max-height: 800px) {
+  .belt img {
+    width: 25px;
+    height: 25px;
+  }
+  .select div {
+    width: 27px;
+    height: 27px;
+  }
+  .wrapper {
+    width: 370px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  #home {
+    flex-direction: column;
+  }
+  .player {
+    display: none;
+  }
+  .belt-wrapper {
+    flex-direction: column;
+    align-self: center;
+  }
+  .select, .belt {
+    display: flex;
+    flex-direction: row;
+  }
+  .wrapper {
+    margin-top: 10px;
+  }
+  #box {
+    margin: 0;
+    width: 320px;
+    height: 320px;
+  }
+  .cell {
+    width: 70px;
+    height: 70px;
+  }
+  #explanation {
+    margin-top: 10px;
+  }
+  .reshuffle {
+    margin-top: 10px;
+  }
+  .belt-wrapper-1 {
+    order: 1;
+  }
+  .belt-wrapper-2 {
+    order: 2;
+  }
+  .picture-enter {
+    transform: translateX(-50%) rotateY(90deg);
+    opacity: 0;
+  }
+  .picture-leave-to {
+    transform: rotateY(90deg);
+    opacity: 0;
+    z-index: -1;
   }
 }
 </style>
